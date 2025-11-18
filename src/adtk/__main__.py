@@ -16,6 +16,7 @@ def downsample(
         "binomial", help="Downsampling method used for UMIs [binomial, multinomial]"
     ),
     which: str = typer.Option("umis", help="Downsampling method [umis, cells]"),
+    seed: int | None = typer.Option(None, help="Random seed for reproducibility"),
 ):
     import anndata as ad
 
@@ -29,6 +30,7 @@ def downsample(
         fraction=fraction,
         method=method,  # type: ignore
         which=which,  # type: ignore
+        seed=seed,
     )  # done inplace
     output_path = output or h5ad.replace(".h5ad", f".ds_{which}_{fraction:.2f}.h5ad")
     adata.write_h5ad(output_path)

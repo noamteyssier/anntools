@@ -99,7 +99,11 @@ def downsample_anndata(
     fraction: float,
     method: Literal["binomial", "multinomial"],
     which: Literal["umis", "cells"],
+    seed: int | None = None,
 ):
+    if seed:
+        np.random.seed(seed)
+
     if not isinstance(adata.X, csr_matrix):
         adata.X = csr_matrix(adata.X)
 
