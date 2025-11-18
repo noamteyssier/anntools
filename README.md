@@ -82,6 +82,7 @@ anntools concat output.h5ad file1.h5ad file2.h5ad --batch-key batch --batch-cate
 
 ### `pseudobulk`
 Aggregate single-cell data into pseudobulk profiles.
+Pseudobulking is done using [`adpbulk`](https://github.com/noamteyssier/adpbulk).
 
 ```bash
 # Pseudobulk by cell type
