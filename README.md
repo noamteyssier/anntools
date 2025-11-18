@@ -1,6 +1,6 @@
 # anntools
 
-A command line utility for working with AnnData files.
+A command line utility for working with [`AnnData`](https://anndata.readthedocs.io/en/stable/) files.
 
 `anntools` provides tools to manipulate, analyze, and transform AnnData (`.h5ad`) files commonly used in single-cell genomics. It offers efficient operations for quality control, downsampling, concatenation, pseudobulking, and more.
 
