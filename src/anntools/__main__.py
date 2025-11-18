@@ -21,7 +21,7 @@ def downsample(
     """Downsample UMIs or Cells in a given h5ad to a specified fraction."""
     import anndata as ad
 
-    from adtk.methods._downsample import downsample_anndata
+    from anntools.methods._downsample import downsample_anndata
 
     adata = ad.read_h5ad(h5ad)
     if adata.X is None:
@@ -129,7 +129,7 @@ def info(
     ),
 ):
     """Display comprehensive information about an h5ad file."""
-    from adtk.methods._info import display_info
+    from anntools.methods._info import display_info
 
     display_info(h5ad, verbose=verbose)
 
@@ -145,7 +145,7 @@ def concat(
     ),
 ):
     """Concatenate multiple h5ad files along the observation axis."""
-    from adtk.methods._concat import concat_anndata
+    from anntools.methods._concat import concat_anndata
 
     concat_anndata(
         h5ad_files=h5ad_files,
@@ -171,7 +171,7 @@ def pseudobulk(
     """Pseudobulk multiple h5ad files along the observation axis."""
     import anndata as ad
 
-    from adtk.methods._pseudobulk import pseudobulk
+    from anntools.methods._pseudobulk import pseudobulk
 
     adata = ad.read_h5ad(h5ad)
     bulked = pseudobulk(

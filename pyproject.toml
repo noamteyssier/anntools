@@ -1,5 +1,5 @@
 [project]
-name = "adtk"
+name = "anntools"
 version = "0.1.0"
 description = "A CLI for basic AnnData operations"
 readme = "README.md"
@@ -19,4 +19,4 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project.scripts]
-adtk = "adtk.__main__:main"
+anntools = "anntools.__main__:main"
