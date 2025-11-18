@@ -1,7 +1,7 @@
 [project]
 name = "anntools"
 version = "0.1.0"
-description = "A CLI for basic AnnData operations"
+description = "A CLI-driven AnnData toolkit"
 readme = "README.md"
 authors = [
     { name = "noam teyssier", email = "22600644+noamteyssier@users.noreply.github.com" }
