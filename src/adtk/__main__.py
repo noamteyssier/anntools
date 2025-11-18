@@ -54,6 +54,27 @@ def sparse(h5ad: str, output: str | None = typer.Option(None, help="Output file 
 
 
 @app.command()
+def qc(
+    h5ad: str,
+    output: str | None = typer.Option(None, help="Output file path"),
+    replace: bool = typer.Option(False, help="Replace existing file"),
+):
+    import anndata as ad
+    import scanpy as sc
+
+    adata = ad.read_h5ad(h5ad)
+    sc.pp.calculate_qc_metrics(adata, inplace=True)
+
+    if replace:
+        if output is not None:
+            raise ValueError("Cannot specify output path when replacing existing file")
+        output_path = h5ad  # set to overwrite existing file
+    else:
+        output_path = output or h5ad.replace(".h5ad", "_qc.h5ad")
+    adata.write_h5ad(output_path)
+
+
+@app.command()
 def view_obs(h5ad: str):
     import sys
 
