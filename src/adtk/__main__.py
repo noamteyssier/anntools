@@ -127,3 +127,25 @@ def info(
     from adtk.methods._info import display_info
 
     display_info(h5ad, verbose=verbose)
+
+
+@app.command()
+def concat(
+    output: str = typer.Argument(..., help="Output file path for concatenated h5ad"),
+    h5ad_files: list[str] = typer.Argument(..., help="Input h5ad files to concatenate"),
+    join: str = typer.Option("inner", help="Join type: 'inner' or 'outer'"),
+    batch_key: str | None = typer.Option(None, help="Key to store batch labels in obs"),
+    batch_categories: str | None = typer.Option(
+        None, help="Comma-separated batch labels (default: file basenames)"
+    ),
+):
+    """Concatenate multiple h5ad files along the observation axis."""
+    from adtk.methods._concat import concat_anndata
+
+    concat_anndata(
+        h5ad_files=h5ad_files,
+        output=output,
+        join=join,  # type: ignore
+        batch_key=batch_key,
+        batch_categories=batch_categories,
+    )
