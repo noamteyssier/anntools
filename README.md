@@ -10,7 +10,7 @@ A command line utility for working with [`AnnData`](https://anndata.readthedocs.
 
 ```bash
 # Using uv (recommended)
-uv pip install anntools
+uv tool install anntools
 
 # Using pip
 pip install anntools
@@ -18,7 +18,7 @@ pip install anntools
 # From source
 git clone https://github.com/noamteyssier/anntools.git
 cd anntools
-uv pip install -e .
+uv tool install -U -e .
 ```
 
 ## Usage
