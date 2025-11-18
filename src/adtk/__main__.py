@@ -154,3 +154,31 @@ def concat(
         batch_key=batch_key,
         batch_categories=batch_categories,
     )
+
+
+@app.command()
+def pseudobulk(
+    h5ad: str = typer.Argument(..., help="Input h5ad file to pseudobulk"),
+    groupby: list[str] = typer.Argument(..., help="Keys to group by"),
+    output: str | None = typer.Option(
+        None, help="Output file path for pseudobulked h5ad"
+    ),
+    layer: str | None = typer.Option(None, help="Layer to pseudobulk"),
+    method: str = typer.Option(
+        "mean", help="Aggregation method to use [mean, median, sum]"
+    ),
+):
+    """Pseudobulk multiple h5ad files along the observation axis."""
+    import anndata as ad
+
+    from adtk.methods._pseudobulk import pseudobulk
+
+    adata = ad.read_h5ad(h5ad)
+    bulked = pseudobulk(
+        adata,
+        groupby=groupby,
+        layer=layer,
+        method=method,  # type: ignore
+    )
+    output_path = output or h5ad.replace(".h5ad", ".pseudobulk.h5ad")
+    bulked.write_h5ad(output_path)
