@@ -21,5 +21,10 @@ build-backend = "hatchling.build"
 [tool.hatch.build.targets.wheel]
 packages = ["src/anntools"]
 
+[dependency-groups]
+dev = [
+    "ruff>=0.14.5",
+]
+
 [project.scripts]
 anntools = "anntools.__main__:main"
