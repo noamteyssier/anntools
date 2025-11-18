@@ -1,0 +1,20 @@
+[project]
+name = "adtk"
+version = "0.1.0"
+description = "A CLI for basic AnnData operations"
+readme = "README.md"
+authors = [
+    { name = "noam teyssier", email = "22600644+noamteyssier@users.noreply.github.com" }
+]
+requires-python = ">=3.13"
+dependencies = [
+    "anndata>=0.12.6",
+    "typer>=0.20.0",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project.scripts]
+adtk = "adtk.__main__:main"
