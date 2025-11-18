@@ -18,6 +18,7 @@ def downsample(
     which: str = typer.Option("umis", help="Downsampling method [umis, cells]"),
     seed: int | None = typer.Option(None, help="Random seed for reproducibility"),
 ):
+    """Downsample UMIs or Cells in a given h5ad to a specified fraction."""
     import anndata as ad
 
     from adtk.methods._downsample import downsample_anndata
@@ -42,6 +43,7 @@ def sparse(
     output: str | None = typer.Option(None, help="Output file path"),
     replace: bool = typer.Option(False, help="Replace existing file"),
 ):
+    """Convert data to CSR sparse format."""
     import sys
 
     import anndata as ad
@@ -69,6 +71,7 @@ def qc(
     output: str | None = typer.Option(None, help="Output file path"),
     replace: bool = typer.Option(False, help="Replace existing file"),
 ):
+    """Calculate quality control metrics for an h5ad file."""
     import anndata as ad
     import scanpy as sc
 
@@ -86,6 +89,7 @@ def qc(
 
 @app.command()
 def view_obs(h5ad: str):
+    """View the .obs dataframe of an h5ad file."""
     import sys
 
     import anndata as ad
@@ -102,6 +106,7 @@ def view_obs(h5ad: str):
 
 @app.command()
 def view_var(h5ad: str):
+    """View the .var dataframe of an h5ad file."""
     import sys
 
     import anndata as ad
