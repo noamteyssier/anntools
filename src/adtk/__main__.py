@@ -114,3 +114,16 @@ def view_var(h5ad: str):
     else:
         var_df = adata.var
     var_df.reset_index().to_csv(sys.stdout, sep="\t", index=False)
+
+
+@app.command()
+def info(
+    h5ad: str,
+    verbose: bool = typer.Option(
+        False, "--verbose", "-v", help="Show detailed information"
+    ),
+):
+    """Display comprehensive information about an h5ad file."""
+    from adtk.methods._info import display_info
+
+    display_info(h5ad, verbose=verbose)
