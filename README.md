@@ -10,10 +10,10 @@ A command line utility for working with [`AnnData`](https://anndata.readthedocs.
 
 ```bash
 # Using uv (recommended)
-uv tool install anntools
+uv tool install anntools-bio
 
 # Using pip
-pip install anntools
+pip install anntools-bio
 
 # From source
 git clone https://github.com/noamteyssier/anntools.git
