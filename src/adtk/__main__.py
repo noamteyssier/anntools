@@ -13,8 +13,9 @@ def downsample(
     fraction: float,
     output: str | None = typer.Option(None, help="Output file path"),
     method: str = typer.Option(
-        "binomial", help="Downsampling method [binomial, multinomial]"
+        "binomial", help="Downsampling method used for UMIs [binomial, multinomial]"
     ),
+    which: str = typer.Option("umis", help="Downsampling method [umis, cells]"),
 ):
     import anndata as ad
 
@@ -23,12 +24,13 @@ def downsample(
     adata = ad.read_h5ad(h5ad)
     if adata.X is None:
         raise ValueError("Input file does not contain data")
-    adata.X = downsample_anndata(
+    downsample_anndata(
         adata,
         fraction=fraction,
         method=method,  # type: ignore
-    )
-    output_path = output or h5ad.replace(".h5ad", f"_dsf{fraction:.2f}.h5ad")
+        which=which,  # type: ignore
+    )  # done inplace
+    output_path = output or h5ad.replace(".h5ad", f".ds_{which}_{fraction:.2f}.h5ad")
     adata.write_h5ad(output_path)
 
 

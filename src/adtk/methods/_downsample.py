@@ -84,31 +84,55 @@ def _downsample_multinomial(matrix: csr_matrix, frac: float) -> csr_matrix:
     return csr_matrix(downsampled_matrix)
 
 
+def _downsample_cells(matrix: csr_matrix, fraction: float) -> np.ndarray:
+    mask = (
+        np.random.random(
+            matrix.shape[0]  # type: ignore
+        )
+        < fraction
+    )
+    return mask
+
+
 def downsample_anndata(
-    adata: ad.AnnData, fraction: float, method: Literal["binomial", "multinomial"]
-) -> csr_matrix:
+    adata: ad.AnnData,
+    fraction: float,
+    method: Literal["binomial", "multinomial"],
+    which: Literal["umis", "cells"],
+):
     if not isinstance(adata.X, csr_matrix):
         adata.X = csr_matrix(adata.X)
 
+    pre_shape = adata.X.shape
     total_elements = np.prod(
-        adata.X.shape  # type: ignore
+        pre_shape  # type: ignore
     )
     pre_nonzero_fraction = adata.X.nnz / total_elements
     pre_nonzero_mean = adata.X.data.mean()
 
-    if method == "binomial":
-        matrix = _downsample_binomial(adata.X, fraction)
-    elif method == "multinomial":
-        matrix = _downsample_multinomial(adata.X, fraction)
+    if which == "umis":
+        if method == "binomial":
+            matrix = _downsample_binomial(adata.X, fraction)
+        elif method == "multinomial":
+            matrix = _downsample_multinomial(adata.X, fraction)
+        else:
+            raise ValueError(f"Unknown method {method}")
+        adata.X = matrix
     else:
-        raise ValueError(f"Unknown method {method}")
+        mask = _downsample_cells(adata.X, fraction)
+        adata = adata[mask, :]
+        matrix: csr_matrix = adata.X  # type: ignore
+        total_elements = np.prod(
+            matrix.shape  # type: ignore
+        )
 
+    post_shape = adata.shape
     post_nonzero_fraction = matrix.nnz / total_elements
     post_nonzero_mean = matrix.data.mean()
 
+    print(f"Pre-filter shape: {pre_shape}", file=sys.stderr)
     print(f"Pre-filter nonzero sparsity: {pre_nonzero_fraction}", file=sys.stderr)
     print(f"Pre-filter nonzero mean: {pre_nonzero_mean}", file=sys.stderr)
+    print(f"Post-filter shape: {post_shape}", file=sys.stderr)
     print(f"Post-filter nonzero sparsity: {post_nonzero_fraction}", file=sys.stderr)
     print(f"Post-filter nonzero mean: {post_nonzero_mean}", file=sys.stderr)
-
-    return matrix
