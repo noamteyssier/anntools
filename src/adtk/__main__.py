@@ -37,7 +37,11 @@ def downsample(
 
 
 @app.command()
-def sparse(h5ad: str, output: str | None = typer.Option(None, help="Output file path")):
+def sparse(
+    h5ad: str,
+    output: str | None = typer.Option(None, help="Output file path"),
+    replace: bool = typer.Option(False, help="Replace existing file"),
+):
     import sys
 
     import anndata as ad
@@ -49,7 +53,13 @@ def sparse(h5ad: str, output: str | None = typer.Option(None, help="Output file 
     else:
         print("Data is already in CSR sparse format - doing nothing", file=sys.stderr)
         return
-    output_path = output or h5ad.replace(".h5ad", "_sparse.h5ad")
+
+    if replace:
+        if output is not None:
+            raise ValueError("Cannot specify output path when replacing existing file")
+        output_path = h5ad  # set to overwrite existing file
+    else:
+        output_path = output or h5ad.replace(".h5ad", "_sparse.h5ad")
     adata.write_h5ad(output_path)
 
 
