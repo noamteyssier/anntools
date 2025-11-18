@@ -1,6 +1,6 @@
 [project]
 name = "anntools-bio"
-version = "0.1.0"
+version = "0.1.1"
 description = "A CLI-driven AnnData toolkit"
 readme = "README.md"
 authors = [
