@@ -100,7 +100,7 @@ def downsample_anndata(
     method: Literal["binomial", "multinomial"],
     which: Literal["umis", "cells"],
     seed: int | None = None,
-):
+) -> ad.AnnData:
     if seed:
         np.random.seed(seed)
 
@@ -140,3 +140,4 @@ def downsample_anndata(
     print(f"Post-filter shape: {post_shape}", file=sys.stderr)
     print(f"Post-filter nonzero sparsity: {post_nonzero_fraction}", file=sys.stderr)
     print(f"Post-filter nonzero mean: {post_nonzero_mean}", file=sys.stderr)
+    return adata

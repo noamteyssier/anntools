@@ -26,13 +26,13 @@ def downsample(
     adata = ad.read_h5ad(h5ad)
     if adata.X is None:
         raise ValueError("Input file does not contain data")
-    downsample_anndata(
+    adata = downsample_anndata(
         adata,
         fraction=fraction,
         method=method,  # type: ignore
         which=which,  # type: ignore
         seed=seed,
-    )  # done inplace
+    )
     output_path = output or h5ad.replace(".h5ad", f".ds_{which}_{fraction:.2f}.h5ad")
     adata.write_h5ad(output_path)
 
